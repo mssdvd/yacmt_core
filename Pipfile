@@ -12,3 +12,4 @@ pyserial = "*"
 
 [dev-packages]
 
+line-profiler = "*"
