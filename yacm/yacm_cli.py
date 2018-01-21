@@ -25,15 +25,20 @@ def print_obd_values(values):
 
 
 def main(port):
-    obd_codes = ['05', '0c', '0d', '10', '11']
+    obd_codes = [
+        '05',  # Engine coolant temperature
+        '0c',  # Engine rpm
+        '0d',  # Speed
+        '10',  # MAF
+        '11'  # Throttle position
+    ]
     mode = '01'
     comm = obd_io.OBD_IO(port)
     results = {}
     with comm:
         while True:
             for code in obd_codes:
-                comm.write(mode, code)
-                results[code] = comm.read()
+                results[code] = comm.send(mode, code)
             os.system('clear')
             print_obd_values(results)
 
