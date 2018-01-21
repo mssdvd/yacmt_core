@@ -105,6 +105,7 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# Line-profiler files
+*.lprof
 
 # End of https://www.gitignore.io/api/python
-/yacm_cli.py.lprof
