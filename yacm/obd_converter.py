@@ -2,7 +2,7 @@ def find_converter(query, result):
     mode = query[0]
     code = query[1]
     if result == "NO DATA":
-        print(result)
+        return result
     else:
         if mode == "01":
             if code == "05":

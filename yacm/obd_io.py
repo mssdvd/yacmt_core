@@ -38,8 +38,8 @@ class OBD_IO(object):
         self.raw_data = self.ser.read_until(b'>')
         while len(self.raw_data) == 0:
             self.raw_data = self.ser.read_until(b'>')
-        if self.raw_data != b'\rNO DATA\r>':
-            self.result = self.raw_data.decode("ascii")[:-2].split(' ')[2:]
+        if self.raw_data != b'NO DATA\r\r>':
+            self.result = self.raw_data.decode("ascii")[:-4].split(' ')[2:]
         else:
-            self.result = self.raw_data.decode("ascii")[1:-2]
+            self.result = self.raw_data.decode("ascii")[:-3]
         return self.result
