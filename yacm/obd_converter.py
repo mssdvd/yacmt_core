@@ -1,23 +1,42 @@
-def eng_cool_temp(codes):
+def find_converter(query, result):
+    mode = query[0]
+    code = query[1]
+    if result == "NO DATA":
+        print(result)
+    else:
+        if mode == "01":
+            if code == "05":
+                return eng_cool_temp(result)
+            if code == "0c":
+                return eng_rpm(result)
+            if code == "0d":
+                return speed(result)
+            if code == "10":
+                return mass_air_flow(result)
+            if code == "11":
+                return throttle_pos(result)
+
+
+def eng_cool_temp(result):
     """Return the engine coolant temperature in Celsius"""
-    return int(codes[0], 16) - 40
+    return int(result[0], 16) - 40
 
 
-def eng_rpm(codes):
+def eng_rpm(result):
     """Return the engine rpm"""
-    return (int(codes[0], 16) * 256 + int(codes[1], 16)) // 4
+    return (int(result[0], 16) * 256 + int(result[1], 16)) // 4
 
 
-def speed(codes):
+def speed(result):
     """Return the car speed in km/h"""
-    return int(codes[0], 16)
+    return int(result[0], 16)
 
 
-def mass_air_flow(codes):
+def mass_air_flow(result):
     """Return the mass air flow rate in g/s"""
-    return (int(codes[0], 16) * 256 + int(codes[1], 16)) // 100
+    return (int(result[0], 16) * 256 + int(result[1], 16)) // 100
 
 
-def throttle_pos(codes):
+def throttle_pos(result):
     """Return the throttle position"""
-    return int(codes[0], 16) * 100 // 255
+    return int(result[0], 16) * 100 // 255

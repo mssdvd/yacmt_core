@@ -6,31 +6,36 @@ import obd_io
 
 
 def print_obd_values(values):
-    for code, result in values.items():
-        if code == '05':
-            print("Engine coolant temperature:")
-            print(str(obd_converter.eng_cool_temp(result)) + ' C')
-        elif code == '0c':
-            print("Engine rpm:")
-            print(str(obd_converter.eng_rpm(result)))
-        elif code == '0d':
-            print("Speed:")
-            print(str(obd_converter.speed(result)) + ' km/h')
-        elif code == '10':
-            print("MAF:")
-            print(str(obd_converter.mass_air_flow(result)) + ' g/s')
-        elif code == '11':
-            print("Throttle position:")
-            print(str(obd_converter.throttle_pos(result)) + ' %')
+    for query, result in values.items():
+        if query[0] == "01":
+            if query[1] == '05':
+                print("Engine coolant temperature:")
+                print(str(obd_converter.find_converter(query, result)) + ' C')
+            elif query[1] == '0c':
+                print("Engine rpm:")
+                print(str(obd_converter.find_converter(query, result)))
+            elif query[1] == '0d':
+                print("Speed:")
+                # yapf: disable
+                print(str(obd_converter.find_converter(query, result)) + ' km/h')
+                # yapf: enable
+            elif query[1] == '10':
+                print("MAF:")
+                # yapf: disable
+                print(str(obd_converter.find_converter(query, result)) + ' g/s')
+                # yapf: enable
+            elif query[1] == '11':
+                print("Throttle position:")
+                print(str(obd_converter.find_converter(query, result)) + ' %')
 
 
 def main(port):
     obd_codes = [
-        '05',  # Engine coolant temperature
-        '0c',  # Engine rpm
-        '0d',  # Speed
-        '10',  # MAF
-        '11'  # Throttle position
+        "05",  # Engine coolant temperature
+        "0c",  # Engine rpm
+        "0d",  # Speed
+        "10",  # MAF
+        "11"  # Throttle position
     ]
     mode = '01'
     comm = obd_io.OBD_IO(port)
@@ -38,7 +43,7 @@ def main(port):
     with comm:
         while True:
             for code in obd_codes:
-                results[code] = comm.send(mode, code)
+                results[(mode, code)] = comm.send(mode, code)
             os.system('clear')
             print_obd_values(results)
 
