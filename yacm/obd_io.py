@@ -30,9 +30,12 @@ class OBD_IO(object):
         self.ser.write(f"{mode} {code}\r\n".encode())
         self.ser.flush()
         if mode == "at" and code != "ws":
-            self.ser.read(2)  # Discard the "OK" message
+            self.ser.read_until(b'>')  # Discard the "OK" message
+        if mode == "at" and code == "ws":
+            self.ser.readline()
 
     def __read(self):
+        # self.ser.read()
         self.raw_data = self.ser.read_until(b'>')
         while len(self.raw_data) == 0:
             self.raw_data = self.ser.read_until(b'>')
