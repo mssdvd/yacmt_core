@@ -42,8 +42,8 @@ def main(port):
     results = {}
     with comm:
         while True:
-            for code in obd_codes:
-                results[(mode, code)] = comm.send(mode, code)
+            results = {(mode, code): comm.query(mode, code)
+                       for code in obd_codes}
             os.system('clear')
             print_obd_values(results)
 
