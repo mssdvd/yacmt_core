@@ -35,11 +35,19 @@ class OBD_IO(object):
             self.ser.readline()
 
     def __read(self):
-        self.raw_data = self.ser.read_until(b'>')
+        # self.ser.read()
+        self.raw_data = self.ser.read_until(b'\r>')
         while len(self.raw_data) == 0:
-            self.raw_data = self.ser.read_until(b'>')
-        if self.raw_data != b'NO DATA\r\r>':
-            self.result = self.raw_data.decode("ascii")[:-4].split(' ')[2:]
+            self.raw_data = self.ser.read_until(b'\r>')
+        # print(self.raw_data)
+        if self.raw_data[0] == 13 and self.raw_data[-3] != 13:  # Emulator
+            self.raw_data = self.raw_data[1:-2]
+        if self.raw_data[0] != 13 and self.raw_data[-3] == 13:  # Car
+            self.raw_data = self.raw_data[:-3]
+        # print(self.raw_data)
+        if self.raw_data != b"NO DATA":
+            self.result = self.raw_data.decode("ascii").split(' ')[2:]
         else:
-            self.result = self.raw_data.decode("ascii")[:-3]
+            self.result = "NO DATA"
+        # print(self.result)
         return self.result
