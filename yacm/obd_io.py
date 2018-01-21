@@ -21,7 +21,7 @@ class OBD_IO(object):
         self.__write("at", "ws")  # Reset device
         self.ser.close()
 
-    def send(self, mode, code):
+    def query(self, mode, code):
         self.__write(mode, code)
         return self.__read()
 
@@ -35,7 +35,6 @@ class OBD_IO(object):
             self.ser.readline()
 
     def __read(self):
-        # self.ser.read()
         self.raw_data = self.ser.read_until(b'\r>')
         while len(self.raw_data) == 0:
             self.raw_data = self.ser.read_until(b'\r>')
