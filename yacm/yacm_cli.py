@@ -5,9 +5,18 @@ import obd_converter
 import obd_io
 
 
+def to_hhmmss(secs):
+    mins, secs = divmod(secs, 60)
+    hours, mins = divmod(mins, 60)
+    return f"{hours}:{mins}:{secs}"
+
+
 def print_obd_values(values):
     for query, result in values.items():
         if query[0] == "01":
+            if query[1] == '04':
+                print("Engine load:")
+                print(str(obd_converter.find_converter(query, result)) + ' %')
             if query[1] == '05':
                 print("Engine coolant temperature:")
                 print(str(obd_converter.find_converter(query, result)) + ' C')
@@ -27,19 +36,39 @@ def print_obd_values(values):
             elif query[1] == '11':
                 print("Throttle position:")
                 print(str(obd_converter.find_converter(query, result)) + ' %')
+            elif query[1] == '1f':
+                print("Run time:")
+                print(to_hhmmss(obd_converter.find_converter(query, result)))
+            elif query[1] == '2f':
+                print("Fuel tank level:")
+                print(str(obd_converter.find_converter(query, result)) + ' %')
+            elif query[1] == '46':
+                print("Ambient air temperature:")
+                print(str(obd_converter.find_converter(query, result)) + ' C')
+            elif query[1] == '51':
+                print("Fuel type:")
+                print(obd_converter.find_converter(query, result))
+            elif query[1] == '5c':
+                print("Engine oil temperature:")
+                print(obd_converter.find_converter(query, result))
 
 
 def main(port):
     obd_codes = [
+        "04",  # Engine load
         "05",  # Engine coolant temperature
         "0c",  # Engine rpm
         "0d",  # Speed
         "10",  # MAF
-        "11"  # Throttle position
+        "11",  # Throttle position
+        "1f",  # Run time
+        "2f",  # Fuel tank level
+        "46",  # Ambient air temperature
+        "51",  # Fuel type
+        "5c"  # Engine oil temperature
     ]
     mode = '01'
-    comm = obd_io.OBD_IO(port)
-    results = {}
+    comm = obd_io.ObdIO(port)
     with comm:
         while True:
             results = {(mode, code): comm.query(mode, code)

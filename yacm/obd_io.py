@@ -1,11 +1,13 @@
+"""Send and receiver data from ELM-327 devices"""
 import serial
 
 
-class OBD_IO(object):
-    """create a server"""
+class ObdIO(object):
+    """Create a obd server"""
 
     def __init__(self, port):
         self.port = port
+        self.ser = None
 
     def __enter__(self):
         self.ser = serial.Serial(
@@ -17,11 +19,12 @@ class OBD_IO(object):
         self.__write("at", "h0")  # Disable headers
         return self.ser
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, exception_type, exception_value, exception_traceback):
         self.__write("at", "ws")  # Reset device
         self.ser.close()
 
     def query(self, mode, code):
+        """Query obd requests"""
         self.__write(mode, code)
         return self.__read()
 
@@ -35,18 +38,21 @@ class OBD_IO(object):
             self.ser.readline()
 
     def __read(self):
-        self.raw_data = self.ser.read_until(b'\r>')
-        while len(self.raw_data) == 0:
-            self.raw_data = self.ser.read_until(b'\r>')
-        # print(self.raw_data)
-        if self.raw_data[0] == 13 and self.raw_data[-3] != 13:  # Emulator
-            self.raw_data = self.raw_data[1:-2]
-        if self.raw_data[0] != 13 and self.raw_data[-3] == 13:  # Car
-            self.raw_data = self.raw_data[:-3]
-        # print(self.raw_data)
-        if self.raw_data != b"NO DATA":
-            self.result = self.raw_data.decode("ascii").split(' ')[2:]
+        raw_data = self.ser.read_until(b'\r>')
+        while raw_data == 0:
+            raw_data = self.ser.read_until(b'\r>')
+        # print(raw_data)
+        if raw_data == b'\r?\r>' or raw_data == b'?\r\r':
+            result = "?"
         else:
-            self.result = "NO DATA"
-        # print(self.result)
-        return self.result
+            if raw_data[0] == 13 and raw_data[-3] != 13:  # Emulator
+                raw_data = raw_data[1:-2]
+            if raw_data[0] != 13 and raw_data[-3] == 13:  # Car
+                raw_data = raw_data[:-3]
+            # print(raw_data)
+            if raw_data != b"NO DATA":
+                result = raw_data.decode("ascii").split(' ')[2:]
+            else:
+                result = "NO DATA"
+        # print(result)
+        return result
