@@ -28,6 +28,9 @@ def print_obd_values(values):
                 # yapf: disable
                 print(str(obd_converter.find_converter(query, result)) + ' km/h')
                 # yapf: enable
+            elif query[1] == '0f':
+                print("Intake air temperature:")
+                print(str(obd_converter.find_converter(query, result)) + ' C')
             elif query[1] == '10':
                 print("MAF:")
                 # yapf: disable
@@ -64,6 +67,7 @@ def main(port):
         "05",  # Engine coolant temperature
         "0c",  # Engine rpm
         "0d",  # Speed
+        "0f",  # Intake air temperature
         "10",  # MAF
         "11",  # Throttle position
         "1f",  # Run time

@@ -16,6 +16,8 @@ def find_converter(query, result):
                 return eng_rpm(result)
             if code == "0d":
                 return speed(result)
+            if code == "0f":
+                return intake_air_temp(result)
             if code == "10":
                 return mass_air_flow(result)
             if code == "11":
@@ -50,6 +52,11 @@ def eng_rpm(result):
 def speed(result):
     """Return the car speed in km/h"""
     return int(result[0], 16)
+
+
+def intake_air_temp(result):
+    """Return the intake air temperature"""
+    return int(result[0], 16) - 40
 
 
 def mass_air_flow(result):
