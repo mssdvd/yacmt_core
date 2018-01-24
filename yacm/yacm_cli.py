@@ -38,7 +38,12 @@ def print_obd_values(values):
                 print(str(obd_converter.find_converter(query, result)) + ' %')
             elif query[1] == '1f':
                 print("Run time:")
-                print(to_hhmmss(obd_converter.find_converter(query, result)))
+                if result == "NO DATA" or result == "?":
+                    print(obd_converter.find_converter(query, result))
+                else:
+                    # yapf: disable
+                    print(to_hhmmss(obd_converter.find_converter(query, result)))
+                    # yapf: enable
             elif query[1] == '2f':
                 print("Fuel tank level:")
                 print(str(obd_converter.find_converter(query, result)) + ' %')
