@@ -14,11 +14,15 @@ bluetoothctl <<EOF
 pair 00:1D:A5:00:2C:61
 EOF
 
-sudo rfcomm bind 0 00:1D:A5:00:2C:61
+sudo -s
 
-sudo python -m yacm.yacm_cli /dev/rfcomm0
+rfcomm bind 0 00:1D:A5:00:2C:61
 
-sudo rfcomm release 0
+python -m yacm.yacm_cli /dev/rfcomm0
+
+rfcomm release 0
+
+exit
 
 bluetoothctl <<EOF
 power off
