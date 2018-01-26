@@ -11,10 +11,10 @@ EOF
 sleep 1
 
 bluetoothctl <<EOF
-pair mac address
+pair 00:1D:A5:00:2C:61
 EOF
 
-sudo rfcomm bind 0 mac address
+sudo rfcomm bind 0 00:1D:A5:00:2C:61
 
 sudo python -m yacm.yacm_cli /dev/rfcomm0
 
