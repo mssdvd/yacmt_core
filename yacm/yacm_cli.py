@@ -1,8 +1,7 @@
 import os
 import sys
 
-from . import obd_converter
-from . import obd_io
+from . import obd_converter, obd_io
 
 
 def to_hhmmss(secs):
@@ -71,10 +70,10 @@ def main(port):
         "10",  # MAF
         "11",  # Throttle position
         "1f",  # Run time
-        "2f",  # Fuel tank level
-        "46",  # Ambient air temperature
-        "51",  # Fuel type
-        "5c"  # Engine oil temperature
+        # "2f",  # Fuel tank level
+        # "46",  # Ambient air temperature
+        # "51",  # Fuel type
+        # "5c"  # Engine oil temperature
     ]
     mode = '01'
     comm = obd_io.ObdIO(port)
