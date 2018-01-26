@@ -1,8 +1,8 @@
 import os
 import sys
 
-import obd_converter
-import obd_io
+from . import obd_converter
+from . import obd_io
 
 
 def to_hhmmss(secs):

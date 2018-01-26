@@ -16,7 +16,7 @@ EOF
 
 sudo rfcomm bind 0 mac address
 
-pipenv run python yacm_cli.py /dev/rfcomm0
+sudo python -m yacm.yacm_cli /dev/rfcomm0
 
 sudo rfcomm release 0
 

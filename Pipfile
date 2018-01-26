@@ -8,10 +8,9 @@ name = "pypi"
 [packages]
 
 pyserial = "*"
-pybluez = "*"
 
 
 [dev-packages]
 
-line-profiler = "*"
+line_profiler = "*"
 pylint = "*"
