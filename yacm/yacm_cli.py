@@ -49,6 +49,9 @@ def print_obd_values(values):
             elif query[1] == '2f':
                 print("Fuel tank level:")
                 print(str(obd_converter.find_converter(query, result)) + ' %')
+            elif query[1] == '42':
+                print("Control module voltage:")
+                print(str(obd_converter.find_converter(query, result)) + ' V')
             elif query[1] == '46':
                 print("Ambient air temperature:")
                 print(str(obd_converter.find_converter(query, result)) + ' C')
@@ -71,6 +74,7 @@ def main(port):
         "11",  # Throttle position
         "1f",  # Run time
         # "2f",  # Fuel tank level
+        "42"  # Control module voltage
         # "46",  # Ambient air temperature
         # "51",  # Fuel type
         # "5c"  # Engine oil temperature

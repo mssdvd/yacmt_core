@@ -26,6 +26,8 @@ def find_converter(query, result):
                 return run_time(result)
             if code == "2f":
                 return fuel_tank_level(result)
+            if code == "42":
+                return control_mod_voltage(result)
             if code == "46":
                 return amb_air_temp(result)
             if code == "51":
@@ -77,6 +79,11 @@ def run_time(result):
 def fuel_tank_level(result):
     """Return the fuel tank input"""
     return int(result[0], 16) * 100 // 255
+
+
+def control_mod_voltage(result):
+    """Return the control module voltage"""
+    return (int(result[0], 16) * 256 + int(result[1], 16)) // 1000
 
 
 def amb_air_temp(result):
