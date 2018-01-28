@@ -23,7 +23,6 @@ class ObdIO(object):
         return self.ser
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
-        self.__write("at", "d0")  # Set defaults
         self.__write("at", "ws")  # Reset device
         self.ser.close()
 
