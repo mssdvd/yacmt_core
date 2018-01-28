@@ -1,4 +1,6 @@
 """Send and receiver data from ELM-327 devices"""
+import time
+
 import serial
 
 
@@ -17,6 +19,8 @@ class ObdIO(object):
         self.__write("at", "l0")  # Disable line feed
         self.__write("at", "e0")  # Disable echo
         self.__write("at", "h0")  # Disable headers
+        self.__write("at", "sp 0")
+        time.sleep(1)
         return self.ser
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
