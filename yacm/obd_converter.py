@@ -7,33 +7,36 @@ def find_converter(query, result):
     if result == "NO DATA" or result == "?":
         return result
     else:
-        if mode == "01":
-            if code == "04":
-                return eng_load(result)
-            if code == "05":
-                return eng_cool_temp(result)
-            if code == "0c":
-                return eng_rpm(result)
-            if code == "0d":
-                return speed(result)
-            if code == "0f":
-                return intake_air_temp(result)
-            if code == "10":
-                return mass_air_flow(result)
-            if code == "11":
-                return throttle_pos(result)
-            if code == "1f":
-                return run_time(result)
-            if code == "2f":
-                return fuel_tank_level(result)
-            if code == "42":
-                return control_mod_voltage(result)
-            if code == "46":
-                return amb_air_temp(result)
-            if code == "51":
-                return fuel_type(result)
-            if code == "5c":
-                return eng_oil_temp(result)
+        try:
+            if mode == "01":
+                if code == "04":
+                    return eng_load(result)
+                if code == "05":
+                    return eng_cool_temp(result)
+                if code == "0c":
+                    return eng_rpm(result)
+                if code == "0d":
+                    return speed(result)
+                if code == "0f":
+                    return intake_air_temp(result)
+                if code == "10":
+                    return mass_air_flow(result)
+                if code == "11":
+                    return throttle_pos(result)
+                if code == "1f":
+                    return run_time(result)
+                if code == "2f":
+                    return fuel_tank_level(result)
+                if code == "42":
+                    return control_mod_voltage(result)
+                if code == "46":
+                    return amb_air_temp(result)
+                if code == "51":
+                    return fuel_type(result)
+                if code == "5c":
+                    return eng_oil_temp(result)
+        except:
+            return "ERROR"
 
 
 def eng_load(result):
