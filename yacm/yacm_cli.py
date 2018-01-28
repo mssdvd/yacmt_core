@@ -13,21 +13,21 @@ def to_hhmmss(secs):
 def print_obd_values(values):
     for query, result in values.items():
         if query[0] == "01":
-            if query[1] == '04':
+            if query[1] == '4':
                 print("Engine load:")
                 print(str(obd_converter.find_converter(query, result)) + ' %')
-            if query[1] == '05':
+            if query[1] == '5':
                 print("Engine coolant temperature:")
                 print(str(obd_converter.find_converter(query, result)) + ' C')
-            elif query[1] == '0c':
+            elif query[1] == 'c':
                 print("Engine rpm:")
                 print(str(obd_converter.find_converter(query, result)))
-            elif query[1] == '0d':
+            elif query[1] == 'd':
                 print("Speed:")
                 # yapf: disable
                 print(str(obd_converter.find_converter(query, result)) + ' km/h')
                 # yapf: enable
-            elif query[1] == '0f':
+            elif query[1] == 'f':
                 print("Intake air temperature:")
                 print(str(obd_converter.find_converter(query, result)) + ' C')
             elif query[1] == '10':
@@ -65,11 +65,11 @@ def print_obd_values(values):
 
 def main(port):
     obd_codes = [
-        "04",  # Engine load
-        "05",  # Engine coolant temperature
-        "0c",  # Engine rpm
-        "0d",  # Speed
-        "0f",  # Intake air temperature
+        "4",  # Engine load
+        "5",  # Engine coolant temperature
+        "c",  # Engine rpm
+        "d",  # Speed
+        "f",  # Intake air temperature
         "10",  # MAF
         "11",  # Throttle position
         "1f",  # Run time

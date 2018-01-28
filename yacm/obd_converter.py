@@ -9,15 +9,15 @@ def find_converter(query, result):
     else:
         try:
             if mode == "01":
-                if code == "04":
+                if code == "4":
                     return eng_load(result)
-                if code == "05":
+                if code == "5":
                     return eng_cool_temp(result)
-                if code == "0c":
+                if code == "c":
                     return eng_rpm(result)
-                if code == "0d":
+                if code == "d":
                     return speed(result)
-                if code == "0f":
+                if code == "f":
                     return intake_air_temp(result)
                 if code == "10":
                     return mass_air_flow(result)
