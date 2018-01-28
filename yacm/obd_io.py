@@ -15,6 +15,7 @@ class ObdIO(object):
             self.port, parity=serial.PARITY_NONE, stopbits=1, bytesize=8)
         self.ser.baudrate = 38400
         # self.__write("at", "ws")  # Reset device
+        self.__write("at", "d0")  # Set defaults
         self.__write("at", "l0")  # Disable line feed
         self.__write("at", "e0")  # Disable echo
         self.__write("at", "h0")  # Disable headers
@@ -22,6 +23,7 @@ class ObdIO(object):
         return self.ser
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
+        self.__write("at", "d0")  # Set defaults
         self.__write("at", "ws")  # Reset device
         self.ser.close()
 
