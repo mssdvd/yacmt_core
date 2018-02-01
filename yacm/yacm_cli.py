@@ -82,7 +82,7 @@ def main(port):
     mode = '01'
     comm = obd_io.ObdIO(port)
     with comm:
-        print(comm.pids_supported())
+        print(comm.supported_pids())
         while True:
             results = {(mode, code): comm.query(mode, code)
                        for code in obd_codes}

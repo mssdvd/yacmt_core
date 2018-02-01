@@ -60,7 +60,7 @@ class ObdIO(object):
         # print(result)
         return result
 
-    def pids_supported(self):
+    def supported_pids(self):
         hex2bin_map = {
             "0": "0000",
             "1": "0001",
@@ -79,7 +79,7 @@ class ObdIO(object):
             "E": "1110",
             "F": "1111",
         }
-        pids_supported = []
+        supported_pids = []
         for pid in [00, 20, 40, 60, 80]:
             pids = ''.join(self.query("01", pid))
             if pids != "?":
@@ -88,5 +88,5 @@ class ObdIO(object):
                 for bit in binary_pids:
                     pid_code += 1
                     if bit == "1":
-                        pids_supported.append(hex(pid_code)[2:])
-        return pids_supported
+                        supported_pids.append(hex(pid_code)[2:])
+        return supported_pids
