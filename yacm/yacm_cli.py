@@ -5,12 +5,14 @@ from . import obd_converter, obd_io
 
 
 def ss2hhmmss(secs):
+    """Converter secods to hours:minutes:seconds"""
     mins, secs = divmod(secs, 60)
     hours, mins = divmod(mins, 60)
     return f"{hours}:{mins}:{secs}"
 
 
 def print_obd_values(values):
+    """Print ECU results"""
     for query, result in values.items():
         if query[0] == "01":
             if query[1] == '4':
@@ -64,6 +66,7 @@ def print_obd_values(values):
 
 
 def main(port):
+    """Main"""
     obd_codes = [
         "4",  # Engine load
         "5",  # Engine coolant temperature

@@ -61,6 +61,7 @@ class ObdIO(object):
         return result
 
     def supported_pids(self):
+        """Return supported pids"""
         hex2bin_map = {
             "0": "0000",
             "1": "0001",
