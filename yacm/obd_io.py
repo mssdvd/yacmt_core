@@ -13,7 +13,7 @@ class ObdIO(object):
     def __enter__(self):
         self.ser = serial.Serial(
             self.port, parity=serial.PARITY_NONE, stopbits=1, bytesize=8)
-        self.ser.baudrate = 38400
+        self.ser.baudrate = 500000
         # self.__write("at", "ws")  # Reset device
         self.__write("at", "d0")  # Set defaults
         self.__write("at", "l0")  # Disable line feed
