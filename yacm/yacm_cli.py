@@ -18,9 +18,14 @@ def print_obd_values(values):
             if query[1] == '4':
                 print("Engine load:")
                 print(str(obd_converter.find_converter(query, result)) + ' %')
-            if query[1] == '5':
+            elif query[1] == '5':
                 print("Engine coolant temperature:")
                 print(str(obd_converter.find_converter(query, result)) + ' C')
+            elif query[1] == 'a':
+                print("Intake manifold absolute pressure:")
+                # yapf: disable
+                print(str(obd_converter.find_converter(query, result)) + ' kPa')
+                # yapf: enable
             elif query[1] == 'c':
                 print("Engine rpm:")
                 print(str(obd_converter.find_converter(query, result)))
@@ -70,6 +75,7 @@ def main(port):
     obd_codes = [
         "4",  # Engine load
         "5",  # Engine coolant temperature
+        "a",  # Intake manifold absolute pressure
         "c",  # Engine rpm
         "d",  # Speed
         "f",  # Intake air temperature

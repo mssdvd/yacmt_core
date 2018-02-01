@@ -13,6 +13,8 @@ def find_converter(query, result):
                     return eng_load(result)
                 if code == "5":
                     return eng_cool_temp(result)
+                if code == "a":
+                    return intake_manifold_abs_press(result)
                 if code == "c":
                     return eng_rpm(result)
                 if code == "d":
@@ -47,6 +49,11 @@ def eng_load(result):
 def eng_cool_temp(result):
     """Return the engine coolant temperature in Celsius"""
     return int(result[0], 16) - 40
+
+
+def intake_manifold_abs_press(result):
+    """Retunr the intake manifold absolute pressure (kPa)"""
+    return result
 
 
 def eng_rpm(result):
