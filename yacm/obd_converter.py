@@ -53,7 +53,7 @@ def eng_cool_temp(result):
 
 def intake_manifold_abs_press(result):
     """Retunr the intake manifold absolute pressure (kPa)"""
-    return result
+    return int(result[0], 16)
 
 
 def eng_rpm(result):
