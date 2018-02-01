@@ -4,7 +4,7 @@ import sys
 from . import obd_converter, obd_io
 
 
-def to_hhmmss(secs):
+def ss2hhmmss(secs):
     mins, secs = divmod(secs, 60)
     hours, mins = divmod(mins, 60)
     return f"{hours}:{mins}:{secs}"
@@ -44,7 +44,7 @@ def print_obd_values(values):
                     print(obd_converter.find_converter(query, result))
                 else:
                     # yapf: disable
-                    print(to_hhmmss(obd_converter.find_converter(query, result)))
+                    print(ss2hhmmss(obd_converter.find_converter(query, result)))
                     # yapf: enable
             elif query[1] == '2f':
                 print("Fuel tank level:")
