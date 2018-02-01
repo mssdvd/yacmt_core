@@ -47,7 +47,7 @@ def eng_load(result):
 
 
 def eng_cool_temp(result):
-    """Return the engine coolant temperature in Celsius"""
+    """Return the engine coolant temperature (C)"""
     return int(result[0], 16) - 40
 
 
@@ -57,22 +57,22 @@ def intake_manifold_abs_press(result):
 
 
 def eng_rpm(result):
-    """Return the engine rpm"""
+    """Return the engine rpm (RPM)"""
     return (int(result[0], 16) * 256 + int(result[1], 16)) // 4
 
 
 def speed(result):
-    """Return the car speed in km/h"""
+    """Return the car speed (km/h)"""
     return int(result[0], 16)
 
 
 def intake_air_temp(result):
-    """Return the intake air temperature"""
+    """Return the intake air temperature (C)"""
     return int(result[0], 16) - 40
 
 
 def mass_air_flow(result):
-    """Return the mass air flow rate in g/s"""
+    """Return the mass air flow rate (g/s)"""
     return (int(result[0], 16) * 256 + int(result[1], 16)) // 100
 
 
@@ -82,7 +82,7 @@ def throttle_pos(result):
 
 
 def run_time(result):
-    """Return the run time since engine start"""
+    """Return the run time since engine start (s)"""
     return int(result[0], 16) * 256 + int(result[1], 16)
 
 
@@ -92,12 +92,12 @@ def fuel_tank_level(result):
 
 
 def control_mod_voltage(result):
-    """Return the control module voltage"""
+    """Return the control module voltage (V)"""
     return (int(result[0], 16) * 256 + int(result[1], 16)) // 1000
 
 
 def amb_air_temp(result):
-    """Return the ambient air temperature"""
+    """Return the ambient air temperature (C)"""
     return int(result[0], 16) - 40
 
 
@@ -156,5 +156,5 @@ def fuel_type(result):
 
 
 def eng_oil_temp(result):
-    """Return the engine oil temp"""
+    """Return the engine oil temp (C)"""
     return int(result[0], 16), 40
