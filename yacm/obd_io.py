@@ -19,7 +19,7 @@ class ObdIO(object):
         self.__write("at", "l0")  # Disable line feed
         self.__write("at", "e0")  # Disable echo
         self.__write("at", "h0")  # Disable headers
-        self.__write("at", "sp 0")
+        self.__write("at", "sp 0")  # Auto set protocol
         return self.ser
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
