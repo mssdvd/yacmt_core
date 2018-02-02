@@ -91,12 +91,16 @@ def main(port):
     mode = '01'
     comm = obd_io.ObdIO(port)
     with comm:
-        print(comm.supported_pids())
-        while True:
-            results = {(mode, code): comm.query(mode, code)
-                       for code in obd_codes}
-            os.system('clear')
-            print_obd_values(results)
+        try:
+            print("Supported pids:")
+            print(comm.supported_pids())
+            while True:
+                results = {(mode, code): comm.query(mode, code)
+                           for code in obd_codes}
+                os.system('clear')
+                print_obd_values(results)
+        except KeyboardInterrupt:
+            print("\nExit")
 
 
 if __name__ == '__main__':
