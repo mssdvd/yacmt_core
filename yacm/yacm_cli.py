@@ -1,7 +1,10 @@
+import logging
 import os
 import sys
 
-from . import obd_converter, obd_io
+import click
+
+from yacm import obd_converter, obd_io
 
 
 def ss2hhmmss(secs):

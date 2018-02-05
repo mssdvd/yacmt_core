@@ -1,5 +1,7 @@
 """Send and receiver data from ELM-327 devices"""
 
+import logging
+
 import serial
 
 
@@ -34,6 +36,7 @@ class ObdIO(object):
     def __write(self, mode, code):
         self.ser.flushInput()
         self.ser.write(f"{mode} {code}\r\n".encode())
+        logging.info(f"Mode: {mode} Code: {code}")
         self.ser.flush()
         if mode == "at" and code != "ws":
             self.ser.read_until(b'>')  # Discard the "OK" message
@@ -44,7 +47,7 @@ class ObdIO(object):
         raw_data = self.ser.read_until(b'\r>')
         while raw_data == 0:
             raw_data = self.ser.read_until(b'\r>')
-        # print(raw_data)
+        logging.info(f"raw_data: {raw_data}\n")
         if raw_data == b'\r?\r>' or raw_data == b'?\r\r':
             result = "?"
         else:
@@ -52,12 +55,10 @@ class ObdIO(object):
                 raw_data = raw_data[1:-2]
             if raw_data[0] != 13 and raw_data[-3] == 13:  # Car
                 raw_data = raw_data[:-3]
-            # print(raw_data)
             if raw_data != b"NO DATA":
                 result = raw_data.decode("ascii").split(' ')[2:]
             else:
                 result = "NO DATA"
-        # print(result)
         return result
 
     def supported_pids(self):
