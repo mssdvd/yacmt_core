@@ -6,6 +6,6 @@ setup(
     author='Davide Masserut',
     author_email='d.masserut@gmail.com',
     packages=['yacm'],
-    install_requires=['pyserial'],
+    install_requires=['pyserial', 'click'],
     extras_require={'dev': ['line_profiler', 'pylint']},
     scripts=['bin/yacm_bluetooth'])

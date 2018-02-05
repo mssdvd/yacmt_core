@@ -73,8 +73,12 @@ def print_obd_values(values):
                 print(obd_converter.find_converter(query, result))
 
 
-def main(port):
-    """Main"""
+@click.command()
+@click.argument('port')
+@click.option('--log', default='WARNING', help="Log level")
+def main(port, log):
+    """Read and print information from the ECU"""
+    logging.basicConfig(level=getattr(logging, log.upper()))
     obd_codes = [
         "4",  # Engine load
         "5",  # Engine coolant temperature
@@ -93,8 +97,8 @@ def main(port):
     ]
     mode = '01'
     comm = obd_io.ObdIO(port)
-    with comm:
-        try:
+    try:
+        with comm:
             print("Supported pids:")
             print(comm.supported_pids())
             while True:
@@ -102,12 +106,9 @@ def main(port):
                            for code in obd_codes}
                 os.system('clear')
                 print_obd_values(results)
-        except KeyboardInterrupt:
-            print("\nExit")
+    except KeyboardInterrupt:
+        print("\nExit")
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2:
-        main(sys.argv[1])
-    else:
-        print("Port is missing")
+    main()
