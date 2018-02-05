@@ -8,4 +8,7 @@ setup(
     packages=['yacm'],
     install_requires=['pyserial', 'click'],
     extras_require={'dev': ['line_profiler', 'pylint']},
-    scripts=['bin/yacm_bluetooth'])
+    scripts=['bin/yacm_bluetooth'],
+    entry_points={
+        'console_scripts': ['yacm = yacm.yacm_cli:main']
+    })

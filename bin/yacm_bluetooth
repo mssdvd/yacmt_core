@@ -5,6 +5,7 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+clear
 rfkill unblock bluetooth
 sleep 1
 bluetoothctl <<EOF
@@ -13,7 +14,7 @@ pair 00:1D:A5:00:2C:61
 EOF
 sleep 1
 rfcomm bind 0 00:1D:A5:00:2C:61
-python -m yacm.yacm_cli /dev/rfcomm0
+yacm /dev/rfcomm0
 rfcomm release 0
 exit
 bluetoothctl <<EOF
