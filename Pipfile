@@ -13,5 +13,5 @@ click = "*"
 
 [dev-packages]
 
-line_profiler = "*"
+line-profiler = "*"
 pylint = "*"
