@@ -85,7 +85,7 @@ class ObdIO(object):
         supported_pids = []
         for pid in ["00", "20", "40", "60", "80"]:
             pids = ''.join(self.query("01", pid))
-            if pids != "?":
+            if pids != "?" and pids != "NO DATA":
                 binary_pids = ''.join(hex2bin_map[nibble] for nibble in pids)
                 pid_code = int(pid)
                 for bit in binary_pids:
