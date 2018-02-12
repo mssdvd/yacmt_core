@@ -1,6 +1,6 @@
 """This module traslates obd codes to a nicer form"""
 
-from typing import List, Tuple
+from typing import Tuple
 
 
 def find_converter(query: Tuple[str, str], result: Tuple[str, ...]):
