@@ -11,17 +11,17 @@ def find_converter(query: Tuple[str, str], result: Tuple[str, ...]):
     else:
         try:
             if mode == "01":
-                if code == "4":
+                if code == "04":
                     return eng_load(result)
-                if code == "5":
+                if code == "05":
                     return eng_cool_temp(result)
-                if code == "a":
+                if code == "0a":
                     return intake_manifold_abs_press(result)
-                if code == "c":
+                if code == "0c":
                     return eng_rpm(result)
-                if code == "d":
+                if code == "0d":
                     return speed(result)
-                if code == "f":
+                if code == "0f":
                     return intake_air_temp(result)
                 if code == "10":
                     return mass_air_flow(result)

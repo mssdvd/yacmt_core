@@ -3,6 +3,7 @@ import os
 from typing import Dict
 
 import click
+
 from yacm import obd_converter, obd_io
 
 
@@ -17,26 +18,26 @@ def print_obd_values(values: Dict) -> None:
     """Print ECU results"""
     for query, result in values.items():
         if query[0] == "01":
-            if query[1] == '4':
+            if query[1] == '04':
                 print("Engine load:")
                 print(str(obd_converter.find_converter(query, result)) + ' %')
-            elif query[1] == '5':
+            elif query[1] == '05':
                 print("Engine coolant temperature:")
                 print(str(obd_converter.find_converter(query, result)) + ' C')
-            elif query[1] == 'a':
+            elif query[1] == '0a':
                 print("Intake manifold absolute pressure:")
                 # yapf: disable
                 print(str(obd_converter.find_converter(query, result)) + ' kPa')
                 # yapf: enable
-            elif query[1] == 'c':
+            elif query[1] == '0c':
                 print("Engine rpm:")
                 print(str(obd_converter.find_converter(query, result)))
-            elif query[1] == 'd':
+            elif query[1] == '0d':
                 print("Speed:")
                 # yapf: disable
                 print(str(obd_converter.find_converter(query, result)) + ' km/h')
                 # yapf: enable
-            elif query[1] == 'f':
+            elif query[1] == '0f':
                 print("Intake air temperature:")
                 print(str(obd_converter.find_converter(query, result)) + ' C')
             elif query[1] == '10':
@@ -80,12 +81,12 @@ def main(port, log, supported_pids):
     """Read and print information from the ECU"""
     logging.basicConfig(level=getattr(logging, log.upper()))
     obd_codes = [
-        "4",  # Engine load
-        "5",  # Engine coolant temperature
-        "a",  # Intake manifold absolute pressure
-        "c",  # Engine rpm
-        "d",  # Speed
-        "f",  # Intake air temperature
+        "04",  # Engine load
+        "05",  # Engine coolant temperature
+        "0a",  # Intake manifold absolute pressure
+        "0c",  # Engine rpm
+        "0d",  # Speed
+        "0f",  # Intake air temperature
         "10",  # MAF
         "11",  # Throttle position
         "1f",  # Run time
