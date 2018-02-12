@@ -22,7 +22,7 @@ class ObdIO(object):
         self.__write("at", "l0")  # Disable line feed
         self.__write("at", "e0")  # Disable echo
         self.__write("at", "h0")  # Disable headers
-        self.__write("at", "sp 0")  # Auto set protocol
+        self.__write("at", "sp0")  # Auto set protocol
         return self.ser
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
@@ -36,7 +36,7 @@ class ObdIO(object):
 
     def __write(self, mode: str, code: str) -> None:
         self.ser.flushInput()
-        self.ser.write(f"{mode} {code}\r\n".encode())
+        self.ser.write(f"{mode}{code}\r".encode())
         logging.info(f"Mode: {mode} Code: {code}")
         self.ser.flush()
         if mode == "at" and code != "ws":
@@ -57,7 +57,7 @@ class ObdIO(object):
             if raw_data[0] != 13 and raw_data[-3] == 13:  # Car
                 raw_data = raw_data[:-3]
             if raw_data != b"NO DATA":
-                result = raw_data.decode("ascii").split(' ')[2:]
+                result = raw_data.decode("ascii").lower().split(' ')[2:]
             else:
                 result = "NO DATA"
         return result
@@ -75,12 +75,12 @@ class ObdIO(object):
             "7": "0111",
             "8": "1000",
             "9": "1001",
-            "A": "1010",
-            "B": "1011",
-            "C": "1100",
-            "D": "1101",
-            "E": "1110",
-            "F": "1111",
+            "a": "1010",
+            "b": "1011",
+            "c": "1100",
+            "d": "1101",
+            "e": "1110",
+            "f": "1111",
         }
         supported_pids = []
         for pid in ["00", "20", "40", "60", "80"]:
