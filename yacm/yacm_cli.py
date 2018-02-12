@@ -1,20 +1,19 @@
 import logging
 import os
-import sys
+from typing import Dict
 
 import click
-
 from yacm import obd_converter, obd_io
 
 
-def ss2hhmmss(secs):
+def ss2hhmmss(secs: int) -> str:
     """Converter secods to hours:minutes:seconds"""
     mins, secs = divmod(secs, 60)
     hours, mins = divmod(mins, 60)
     return f"{hours}:{mins}:{secs}"
 
 
-def print_obd_values(values):
+def print_obd_values(values: Dict) -> None:
     """Print ECU results"""
     for query, result in values.items():
         if query[0] == "01":

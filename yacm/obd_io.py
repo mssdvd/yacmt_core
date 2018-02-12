@@ -1,6 +1,7 @@
 """Send and receiver data from ELM-327 devices"""
 
 import logging
+from typing import List
 
 import serial
 
@@ -28,12 +29,12 @@ class ObdIO(object):
         self.__write("at", "ws")  # Reset device
         self.ser.close()
 
-    def query(self, mode, code):
+    def query(self, mode: str, code: str) -> str:
         """Query obd requests"""
         self.__write(mode, code)
         return self.__read()
 
-    def __write(self, mode, code):
+    def __write(self, mode: str, code: str) -> None:
         self.ser.flushInput()
         self.ser.write(f"{mode} {code}\r\n".encode())
         logging.info(f"Mode: {mode} Code: {code}")
@@ -43,7 +44,7 @@ class ObdIO(object):
         if mode == "at" and code == "ws":
             self.ser.readline()
 
-    def __read(self):
+    def __read(self) -> str:
         raw_data = self.ser.read_until(b'\r>')
         while raw_data == 0:
             raw_data = self.ser.read_until(b'\r>')
@@ -61,7 +62,7 @@ class ObdIO(object):
                 result = "NO DATA"
         return result
 
-    def supported_pids(self):
+    def supported_pids(self) -> List[str]:
         """Return supported pids"""
         hex2bin_map = {
             "0": "0000",
@@ -82,11 +83,11 @@ class ObdIO(object):
             "F": "1111",
         }
         supported_pids = []
-        for pid in [00, 20, 40, 60, 80]:
+        for pid in ["00", "20", "40", "60", "80"]:
             pids = ''.join(self.query("01", pid))
             if pids != "?":
                 binary_pids = ''.join(hex2bin_map[nibble] for nibble in pids)
-                pid_code = pid
+                pid_code = int(pid)
                 for bit in binary_pids:
                     pid_code += 1
                     if bit == "1":

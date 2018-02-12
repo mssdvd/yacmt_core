@@ -1,7 +1,9 @@
 """This module traslates obd codes to a nicer form"""
 
+from typing import List, Tuple
 
-def find_converter(query, result):
+
+def find_converter(query: Tuple[str, str], result: Tuple[str, ...]):
     mode = query[0]
     code = query[1]
     if result == "NO DATA" or result == "?":
@@ -41,67 +43,67 @@ def find_converter(query, result):
             return "ERROR"
 
 
-def eng_load(result):
+def eng_load(result: Tuple[str, ...]) -> int:
     """Returun the engine load"""
     return int(result[0], 16) * 100 // 255
 
 
-def eng_cool_temp(result):
+def eng_cool_temp(result: Tuple[str, ...]) -> int:
     """Return the engine coolant temperature (C)"""
     return int(result[0], 16) - 40
 
 
-def intake_manifold_abs_press(result):
+def intake_manifold_abs_press(result: Tuple[str, ...]) -> int:
     """Retunr the intake manifold absolute pressure (kPa)"""
     return int(result[0], 16)
 
 
-def eng_rpm(result):
+def eng_rpm(result: Tuple[str, ...]):
     """Return the engine rpm (RPM)"""
     return (int(result[0], 16) * 256 + int(result[1], 16)) // 4
 
 
-def speed(result):
+def speed(result: Tuple[str, ...]) -> int:
     """Return the car speed (km/h)"""
     return int(result[0], 16)
 
 
-def intake_air_temp(result):
+def intake_air_temp(result: Tuple[str, ...]) -> int:
     """Return the intake air temperature (C)"""
     return int(result[0], 16) - 40
 
 
-def mass_air_flow(result):
+def mass_air_flow(result: Tuple[str, ...]):
     """Return the mass air flow rate (g/s)"""
     return (int(result[0], 16) * 256 + int(result[1], 16)) // 100
 
 
-def throttle_pos(result):
+def throttle_pos(result: Tuple[str, ...]) -> int:
     """Return the throttle position"""
     return int(result[0], 16) * 100 // 255
 
 
-def run_time(result):
+def run_time(result: Tuple[str, ...]):
     """Return the run time since engine start (s)"""
     return int(result[0], 16) * 256 + int(result[1], 16)
 
 
-def fuel_tank_level(result):
+def fuel_tank_level(result: Tuple[str, ...]) -> int:
     """Return the fuel tank input"""
     return int(result[0], 16) * 100 // 255
 
 
-def control_mod_voltage(result):
+def control_mod_voltage(result: Tuple[str, ...]):
     """Return the control module voltage (V)"""
     return (int(result[0], 16) * 256 + int(result[1], 16)) // 1000
 
 
-def amb_air_temp(result):
+def amb_air_temp(result: Tuple[str, ...]) -> int:
     """Return the ambient air temperature (C)"""
     return int(result[0], 16) - 40
 
 
-def fuel_type(result):
+def fuel_type(result: Tuple[str, ...]) -> str:
     """Return the fuel type"""
     fuel_code = int(result[0], 16)
     if fuel_code == 0:
@@ -155,6 +157,6 @@ def fuel_type(result):
     return fuel_string
 
 
-def eng_oil_temp(result):
+def eng_oil_temp(result: Tuple[str, ...]) -> int:
     """Return the engine oil temp (C)"""
-    return int(result[0], 16), 40
+    return int(result[0], 16) + 40
