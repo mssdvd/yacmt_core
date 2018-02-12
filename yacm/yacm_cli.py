@@ -74,8 +74,9 @@ def print_obd_values(values: Dict) -> None:
 
 @click.command()
 @click.argument('port')
-@click.option('--log', default='WARNING', help="Log level")
-def main(port, log):
+@click.option('--log', default='WARNING', help='Log level')
+@click.option('--supported-pids', is_flag=True, help='Show supported pids')
+def main(port, log, supported_pids):
     """Read and print information from the ECU"""
     logging.basicConfig(level=getattr(logging, log.upper()))
     obd_codes = [
@@ -98,13 +99,15 @@ def main(port, log):
     comm = obd_io.ObdIO(port)
     try:
         with comm:
-            print("Supported pids:")
-            print(comm.supported_pids())
-            while True:
-                results = {(mode, code): comm.query(mode, code)
-                           for code in obd_codes}
-                os.system('clear')
-                print_obd_values(results)
+            if supported_pids:
+                print("Supported pids:")
+                print(comm.supported_pids())
+            else:
+                while True:
+                    results = {(mode, code): comm.query(mode, code)
+                               for code in obd_codes}
+                    os.system('clear')
+                    print_obd_values(results)
     except KeyboardInterrupt:
         print("\nExit")
 
