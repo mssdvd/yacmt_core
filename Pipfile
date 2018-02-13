@@ -9,6 +9,7 @@ name = "pypi"
 
 pyserial = "*"
 click = "*"
+filelock = "*"
 
 
 [dev-packages]

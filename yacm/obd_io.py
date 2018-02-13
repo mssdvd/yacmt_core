@@ -1,9 +1,12 @@
 """Send and receiver data from ELM-327 devices"""
 
 import logging
+from tempfile import gettempdir
 from typing import List
 
 import serial
+
+from filelock import FileLock
 
 
 class ObdIO(object):
@@ -12,6 +15,10 @@ class ObdIO(object):
     def __init__(self, port):
         self.port = port
         self.ser = None
+        self.__lock = FileLock(
+            gettempdir() + "/yacm-" + self.port.replace("/", "") + ".lock",
+            timeout=1)
+        self.__lock.acquire()
 
     def __enter__(self):
         self.ser = serial.Serial(
@@ -28,6 +35,7 @@ class ObdIO(object):
     def __exit__(self, exception_type, exception_value, exception_traceback):
         self.__write("at", "ws")  # Reset device
         self.ser.close()
+        self.__lock.release()
 
     def query(self, mode: str, code: str) -> str:
         """Query obd requests"""
