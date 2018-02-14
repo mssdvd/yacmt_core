@@ -6,9 +6,7 @@ setup(
     author='Davide Masserut',
     author_email='d.masserut@gmail.com',
     packages=['yacm'],
-    install_requires=['pyserial', 'click'],
+    install_requires=['pyserial', 'click', 'filelock'],
     extras_require={'dev': ['line_profiler', 'pylint']},
     scripts=['bin/yacm_bluetooth'],
-    entry_points={
-        'console_scripts': ['yacm = yacm.yacm_cli:main']
-    })
+    entry_points={'console_scripts': ['yacm = yacm.yacm_cli:main']})
