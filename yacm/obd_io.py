@@ -47,27 +47,29 @@ class ObdIO(object):
         self.ser.write(f"{mode}{code}\r".encode())
         logging.info(f"Mode: {mode} Code: {code}")
         self.ser.flush()
-        if mode == "at" and code != "ws":
-            self.ser.read_until(b'>')  # Discard the "OK" message
-        if mode == "at" and code == "ws":
-            self.ser.readline()
+        if mode == "at":
+            if code == "ws":
+                self.ser.readline()
+            else:
+                self.ser.read_until(b'>')  # Discard the "OK" message
 
     def __read(self) -> str:
         raw_data = self.ser.read_until(b'\r>')
         while raw_data == 0:
             raw_data = self.ser.read_until(b'\r>')
-        logging.info(f"raw_data: {raw_data}\n")
-        if raw_data == b'\r?\r>' or raw_data == b'?\r\r':
-            result = "?"
-        else:
+        logging.info(f"raw_data: {raw_data}")
+        if raw_data not in {b'\r?\r>', b'?\r\r'}:
             if raw_data[0] == 13 and raw_data[-3] != 13:  # Emulator
                 raw_data = raw_data[1:-2]
             if raw_data[0] != 13 and raw_data[-3] == 13:  # Car
                 raw_data = raw_data[:-3]
-            if raw_data != b"NO DATA":
-                result = raw_data.decode("ascii").lower().split(' ')[2:]
-            else:
+            if raw_data == b"NO DATA":
                 result = "NO DATA"
+            else:
+                result = raw_data.decode("ascii").lower().split(' ')[2:]
+        else:
+            result = "?"
+        logging.info(f"result: {result}\n")
         return result
 
     def supported_pids(self) -> List[str]:
@@ -93,7 +95,7 @@ class ObdIO(object):
         supported_pids = []
         for pid in ["00", "20", "40", "60", "80"]:
             pids = ''.join(self.query("01", pid))
-            if pids != "?" and pids != "NO DATA":
+            if pids not in {"?", "NO DATA"}:
                 binary_pids = ''.join(hex2bin_map[nibble] for nibble in pids)
                 pid_code = int(pid)
                 for bit in binary_pids:

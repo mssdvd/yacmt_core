@@ -4,11 +4,8 @@ from typing import Tuple
 
 
 def find_converter(query: Tuple[str, str], result: Tuple[str, ...]):
-    mode = query[0]
-    code = query[1]
-    if result == "NO DATA" or result == "?":
-        return result
-    else:
+    mode, code = query
+    if result != "NO DATA" and result != "?":
         try:
             if mode == "01":
                 if code == "04":
@@ -41,6 +38,8 @@ def find_converter(query: Tuple[str, str], result: Tuple[str, ...]):
                     return eng_oil_temp(result)
         except:
             return "ERROR"
+    else:
+        return result
 
 
 def eng_load(result: Tuple[str, ...]) -> int:
