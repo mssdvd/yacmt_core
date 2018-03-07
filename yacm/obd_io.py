@@ -92,7 +92,7 @@ class ObdIO(object):
             "e": "1110",
             "f": "1111",
         }
-        supported_pids = []
+        supported_pids: List[str] = []
         for pid in ["00", "20", "40", "60", "80"]:
             pids = ''.join(self.query("01", pid))
             if pids not in {"?", "NO DATA"}:

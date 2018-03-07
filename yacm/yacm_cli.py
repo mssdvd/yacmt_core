@@ -3,7 +3,6 @@ import os
 from typing import Dict
 
 import click
-
 from yacm import obd_converter, obd_io
 
 
