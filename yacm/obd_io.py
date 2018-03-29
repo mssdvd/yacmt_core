@@ -30,7 +30,7 @@ class ObdIO(object):
         self.__write("at", "e0")  # Disable echo
         self.__write("at", "h0")  # Disable headers
         self.__write("at", "sp0")  # Auto set protocol
-        return self.ser
+        return self
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
         self.__write("at", "ws")  # Reset device

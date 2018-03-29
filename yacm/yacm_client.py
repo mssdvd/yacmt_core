@@ -89,9 +89,8 @@ def main(port, log, supported_pids, json):
         # "5c"  # Engine oil temperature
     ]
     mode = '01'
-    comm = obd_io.ObdIO(port)
     try:
-        with comm:
+        with obd_io.ObdIO(port) as comm:
             if supported_pids:
                 print("Supported pids:")
                 print(JSON.dumps(comm.supported_pids()))
