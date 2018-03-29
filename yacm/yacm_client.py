@@ -8,14 +8,6 @@ import click
 from yacm import obd_converter, obd_io
 
 
-def json_generator(values: Dict) -> str:
-    return JSON.dumps({
-        obd_converter.find_converter_name(query): obd_converter.find_converter(
-            query, result)
-        for query, result in values.items()
-    })
-
-
 def ss2hhmmss(secs: int) -> str:
     """Converter secods to hours:minutes:seconds"""
     mins, secs = divmod(secs, 60)
@@ -25,61 +17,51 @@ def ss2hhmmss(secs: int) -> str:
 
 def print_obd_values(values: Dict) -> None:
     """Print ECU results"""
-    for query, result in values.items():
-        if query[0] == "01":
-            if query[1] == '04':
-                print("Engine load:")
-                print(str(obd_converter.find_converter(query, result)) + ' %')
-            elif query[1] == '05':
-                print("Engine coolant temperature:")
-                print(str(obd_converter.find_converter(query, result)) + ' C')
-            elif query[1] == '0a':
-                print("Intake manifold absolute pressure:")
-                # yapf: disable
-                print(str(obd_converter.find_converter(query, result)) + ' kPa')
-                # yapf: enable
-            elif query[1] == '0c':
-                print("Engine rpm:")
-                print(str(obd_converter.find_converter(query, result)))
-            elif query[1] == '0d':
-                print("Speed:")
-                # yapf: disable
-                print(str(obd_converter.find_converter(query, result)) + ' km/h')
-                # yapf: enable
-            elif query[1] == '0f':
-                print("Intake air temperature:")
-                print(str(obd_converter.find_converter(query, result)) + ' C')
-            elif query[1] == '10':
-                print("MAF:")
-                # yapf: disable
-                print(str(obd_converter.find_converter(query, result)) + ' g/s')
-                # yapf: enable
-            elif query[1] == '11':
-                print("Throttle position:")
-                print(str(obd_converter.find_converter(query, result)) + ' %')
-            elif query[1] == '1f':
-                print("Run time:")
-                if result == "NO DATA" or result == "?":
-                    print(obd_converter.find_converter(query, result))
-                else:
-                    # yapf: disable
-                    print(ss2hhmmss(obd_converter.find_converter(query, result)))
-                    # yapf: enable
-            elif query[1] == '2f':
-                print("Fuel tank level:")
-                print(str(obd_converter.find_converter(query, result)) + ' %')
-            elif query[1] == '42':
-                print("Control module voltage:")
-                print(str(obd_converter.find_converter(query, result)) + ' V')
-            elif query[1] == '46':
-                print("Ambient air temperature:")
-                print(str(obd_converter.find_converter(query, result)) + ' C')
-            elif query[1] == '51':
-                print("Fuel type:")
-                print(obd_converter.find_converter(query, result))
-            elif query[1] == '5c':
-                print("Engine oil temperature:")
-                print(obd_converter.find_converter(query, result))
+    if "eng_load" in values:
+        print("Engine load:")
+        print(str(values["eng_load"]) + " %")
+    if "eng_cool_temp" in values:
+        print("Engine coolant temperature:")
+        print(str(values["eng_cool_temp"]) + " C")
+    if "intake_manifold_abs_press" in values:
+        print("Intake manifold absolute pressure:")
+        print(str(values["intake_manifold_abs_press"]) + " kPa")
+    if "eng_rpm" in values:
+        print("Engine rpm:")
+        print(str(values["eng_rpm"]) + " RPM")
+    if "speed" in values:
+        print("Speed:")
+        print(str(values["speed"]) + " km/h")
+    if "intake_air_temp" in values:
+        print("Intake air temperature:")
+        print(str(values["intake_air_temp"]) + " C")
+    if "mass_air_flow" in values:
+        print("MAF:")
+        print(str(values["mass_air_flow"]) + " g/s")
+    if "throttle_pos" in values:
+        print("Throttle position:")
+        print(str(values["throttle_pos"]) + " %")
+    if "run_time" in values:
+        print("Run time:")
+        if values["run_time"] == "NO DATA" or values["run_time"] == "?":
+            print(values["run_time"])
+        else:
+            print(ss2hhmmss(values["run_time"]))
+    if "fuel_tank_level" in values:
+        print("Fuel tank level:")
+        print(str(values["fuel_tank_level"]) + " %")
+    if "control_mod_voltage" in values:
+        print("Control module voltage:")
+        print(str(values["control_mod_voltage"]) + " V")
+    if "amb_air_temp" in values:
+        print("Ambient air temperature:")
+        print(str(values["amb_air_temp"]) + " C")
+    if "fuel_type" in values:
+        print("Fuel type:")
+        print(values["fuel_type"])
+    if "eng_oil_temp" in values:
+        print("Engine oil temperature:")
+        print(values["eng_oil_temp"] + " C")
 
 
 @click.command()
@@ -115,10 +97,14 @@ def main(port, log, supported_pids, json):
                 print(JSON.dumps(comm.supported_pids()))
             else:
                 while True:
-                    results = {(mode, code): comm.query(mode, code)
-                               for code in obd_codes}
+                    results = {
+                        obd_converter.find_converter_name((mode, code)):
+                        obd_converter.find_converter((mode, code),
+                                                     comm.query(mode, code))
+                        for code in obd_codes
+                    }
                     if json:
-                        print(json_generator(results))
+                        print(JSON.dumps(results))
                         break
                     else:
                         os.system('clear')
