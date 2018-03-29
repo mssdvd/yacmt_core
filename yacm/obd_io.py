@@ -1,11 +1,11 @@
 """Send and receiver data from ELM-327 devices"""
 
 import logging
+import os
 from tempfile import gettempdir
 from typing import List
 
 import serial
-
 from filelock import FileLock
 
 
@@ -36,6 +36,7 @@ class ObdIO(object):
         self.__write("at", "ws")  # Reset device
         self.ser.close()
         self.__lock.release()
+        os.remove(self.__lock.lock_file)
 
     def query(self, mode: str, code: str) -> str:
         """Query obd requests"""
