@@ -3,6 +3,40 @@
 from typing import Tuple
 
 
+def find_converter_name(query: Tuple[str, str]) -> str:
+    mode, code = query
+    if mode == "01":
+        if code == "04":
+            return "eng_load"
+        if code == "05":
+            return "eng_cool_temp"
+        if code == "0a":
+            return "intake_manifold_abs_press"
+        if code == "0c":
+            return "eng_rpm"
+        if code == "0d":
+            return "speed"
+        if code == "0f":
+            return "intake_air_temp"
+        if code == "10":
+            return "mass_air_flow"
+        if code == "11":
+            return "throttle_pos"
+        if code == "1f":
+            return "run_time"
+        if code == "2f":
+            return "fuel_tank_level"
+        if code == "42":
+            return "control_mod_voltage"
+        if code == "46":
+            return "amb_air_temp"
+        if code == "51":
+            return "fuel_type"
+        if code == "5c":
+            return "eng_oil_temp"
+    return "ERROR"
+
+
 def find_converter(query: Tuple[str, str], result: Tuple[str, ...]):
     mode, code = query
     if result != "NO DATA" and result != "?":
