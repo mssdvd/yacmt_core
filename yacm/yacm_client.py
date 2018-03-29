@@ -112,7 +112,7 @@ def main(port, log, supported_pids, json):
         with comm:
             if supported_pids:
                 print("Supported pids:")
-                print(comm.supported_pids())
+                print(JSON.dumps(comm.supported_pids()))
             else:
                 while True:
                     results = {(mode, code): comm.query(mode, code)
