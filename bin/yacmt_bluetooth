@@ -14,7 +14,7 @@ pair 00:1D:A5:00:2C:61
 EOF
 sleep 1
 rfcomm bind 0 00:1D:A5:00:2C:61
-yacm /dev/rfcomm0
+yacmt /dev/rfcomm0
 rfcomm release 0
 exit
 bluetoothctl <<EOF
