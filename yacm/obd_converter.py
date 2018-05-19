@@ -1,6 +1,6 @@
 """This module traslates obd codes to a nicer form"""
 
-from typing import Tuple
+from typing import Tuple, Union
 
 
 def find_converter_name(query: Tuple[str, str]) -> str:
@@ -37,7 +37,8 @@ def find_converter_name(query: Tuple[str, str]) -> str:
     return "ERROR"
 
 
-def find_converter(query: Tuple[str, str], result: Tuple[str, ...]):
+def find_converter(query: Tuple[str, str],
+                   result: Union[str, Tuple[str, ...]]):
     mode, code = query
     if result != "NO DATA" and result != "?":
         try:

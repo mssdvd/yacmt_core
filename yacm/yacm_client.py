@@ -5,7 +5,8 @@ from typing import Dict
 
 import click
 
-from yacm import obd_converter, obd_io
+import obd_converter
+import obd_io
 
 
 def ss2hhmmss(secs: int) -> str:

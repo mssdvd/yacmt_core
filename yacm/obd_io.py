@@ -3,7 +3,7 @@
 import logging
 import os
 from tempfile import gettempdir
-from typing import List
+from typing import List, Tuple, Union
 
 import serial
 from filelock import FileLock
@@ -38,7 +38,7 @@ class ObdIO(object):
         self.__lock.release()
         os.remove(self.__lock.lock_file)
 
-    def query(self, mode: str, code: str) -> str:
+    def query(self, mode: str, code: str) -> Union[str, Tuple]:
         """Query obd requests"""
         self.__write(mode, code)
         return self.__read()
@@ -54,7 +54,7 @@ class ObdIO(object):
             else:
                 self.ser.read_until(b'>')  # Discard the "OK" message
 
-    def __read(self) -> str:
+    def __read(self) -> Union[str, Tuple]:
         raw_data = self.ser.read_until(b'\r>')
         while raw_data == 0:
             raw_data = self.ser.read_until(b'\r>')
