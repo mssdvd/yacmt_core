@@ -104,8 +104,11 @@ def main(port, log, supported_pids, json):
                         for code in obd_codes
                     }
                     if json:
+                        import tempfile
                         print(JSON.dumps(results))
-                        break
+                        with open(tempfile.gettempdir() + "/yacmt-server.json",
+                                  "w") as f:
+                            f.write(JSON.dumps(results))
                     else:
                         os.system('clear')
                         print_obd_values(results)
