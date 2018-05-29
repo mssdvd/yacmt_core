@@ -44,33 +44,33 @@ def find_converter(query: Tuple[str, str],
         try:
             if mode == "01":
                 if code == "04":
-                    return eng_load(result)
+                    return eng_load(result)  # type: ignore
                 if code == "05":
-                    return eng_cool_temp(result)
+                    return eng_cool_temp(result)  # type: ignore
                 if code == "0a":
-                    return intake_manifold_abs_press(result)
+                    return intake_manifold_abs_press(result)  # type: ignore
                 if code == "0c":
-                    return eng_rpm(result)
+                    return eng_rpm(result)  # type: ignore
                 if code == "0d":
-                    return speed(result)
+                    return speed(result)  # type: ignore
                 if code == "0f":
-                    return intake_air_temp(result)
+                    return intake_air_temp(result)  # type: ignore
                 if code == "10":
-                    return mass_air_flow(result)
+                    return mass_air_flow(result)  # type: ignore
                 if code == "11":
-                    return throttle_pos(result)
+                    return throttle_pos(result)  # type: ignore
                 if code == "1f":
-                    return run_time(result)
+                    return run_time(result)  # type: ignore
                 if code == "2f":
-                    return fuel_tank_level(result)
+                    return fuel_tank_level(result)  # type: ignore
                 if code == "42":
-                    return control_mod_voltage(result)
+                    return control_mod_voltage(result)  # type: ignore
                 if code == "46":
-                    return amb_air_temp(result)
+                    return amb_air_temp(result)  # type: ignore
                 if code == "51":
-                    return fuel_type(result)
+                    return fuel_type(result)  # type: ignore
                 if code == "5c":
-                    return eng_oil_temp(result)
+                    return eng_oil_temp(result)  # type: ignore
         except:
             return "ERROR"
     else:
