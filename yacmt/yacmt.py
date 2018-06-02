@@ -1,3 +1,4 @@
+import datetime
 import json as JSON
 import logging
 import os
@@ -7,13 +8,6 @@ import click
 
 import obd_converter
 import obd_io
-
-
-def ss2hhmmss(secs: int) -> str:
-    """Converter secods to hours:minutes:seconds"""
-    mins, secs = divmod(secs, 60)
-    hours, mins = divmod(mins, 60)
-    return f"{hours}:{mins}:{secs}"
 
 
 def print_obd_values(values: Dict) -> None:
@@ -47,7 +41,7 @@ def print_obd_values(values: Dict) -> None:
         if values["run_time"] == "NO DATA" or values["run_time"] == "?":
             print(values["run_time"])
         else:
-            print(ss2hhmmss(values["run_time"]))
+            print(str(datetime.timedelta(seconds=values["run_time"])))
     if "fuel_tank_level" in values:
         print("Fuel tank level:")
         print(str(values["fuel_tank_level"]) + " %")
