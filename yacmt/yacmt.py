@@ -6,8 +6,8 @@ from typing import Dict
 
 import click
 
-import obd_converter
-import obd_io
+from .obd_converter import find_converter, find_converter_name
+from .obd_io import ObdIO
 
 
 def print_obd_values(values: Dict) -> None:
@@ -15,6 +15,7 @@ def print_obd_values(values: Dict) -> None:
     if "eng_load" in values:
         print("Engine load:")
         print(str(values["eng_load"]) + " %")
+
     if "eng_cool_temp" in values:
         print("Engine coolant temperature:")
         print(str(values["eng_cool_temp"]) + " C")
@@ -85,16 +86,15 @@ def main(port, log, supported_pids, json):
     ]
     mode = '01'
     try:
-        with obd_io.ObdIO(port) as comm:
+        with ObdIO(port) as comm:
             if supported_pids:
                 print("Supported pids:")
                 print(JSON.dumps(comm.supported_pids()))
             else:
                 while True:
                     results = {
-                        obd_converter.find_converter_name((mode, code)):
-                        obd_converter.find_converter((mode, code),
-                                                     comm.query(mode, code))
+                        find_converter_name((mode, code)): find_converter(
+                            (mode, code), comm.query(mode, code))
                         for code in obd_codes
                     }
                     if json:
