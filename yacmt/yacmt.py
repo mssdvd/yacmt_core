@@ -63,7 +63,7 @@ def print_obd_values(values: Dict) -> None:
 @click.argument('port')
 @click.option('--log', default='WARNING', help='Log level')
 @click.option('--supported-pids', is_flag=True, help='Show supported pids')
-@click.option('--json', is_flag=True, help='Print Json')
+@click.option('--json', is_flag=True, help='Generate JSON')
 def main(port, log, supported_pids, json):
     """Read and print information from the ECU"""
     logging.basicConfig(level=getattr(logging, log.upper()))
