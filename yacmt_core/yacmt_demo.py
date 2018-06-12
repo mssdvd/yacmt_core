@@ -7,7 +7,7 @@ import time
 def main():
     start_time = time.time()
     while True:
-        with open("/tmp/yacmt-server.json", "w") as f:
+        with open("/tmp/yacmt.json", "w") as f:
             run_time = int(time.time() - start_time)
             data_demo = {
                 "eng_rpm": random.randint(1200, 1600),

@@ -100,7 +100,7 @@ def main(port, log, supported_pids, json):
                     if json:
                         import tempfile
                         print(JSON.dumps(results))
-                        with open(tempfile.gettempdir() + "/yacmt-server.json",
+                        with open(tempfile.gettempdir() + "/yacmt.json",
                                   "w") as f:
                             f.write(JSON.dumps(results))
                     else:

@@ -1,16 +1,18 @@
 from setuptools import setup
 
 setup(
-    name='yacmt',
+    name='yacmt_core',
     version='0.2.1',
     author='Davide Masserut',
     author_email='d.masserut@gmail.com',
     license='MIT',
-    packages=['yacmt'],
+    packages=['yacmt_core'],
     install_requires=['pyserial', 'click', 'filelock'],
     extras_require={'dev': ['line_profiler', 'pylint']},
     scripts=['bin/yacmt_bluetooth'],
     entry_points={
-        'console_scripts':
-        ['yacmt = yacmt.yacmt:main', 'yacmt_demo = yacmt.yacmt_demo:main']
+        'console_scripts': [
+            'yacmt_core = yacmt_core.yacmt_core:main',
+            'yacmt_demo = yacmt_core.yacmt_demo:main'
+        ]
     })
