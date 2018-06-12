@@ -5,6 +5,7 @@ setup(
     version='0.2.1',
     author='Davide Masserut',
     author_email='d.masserut@gmail.com',
+    license='MIT',
     packages=['yacmt'],
     install_requires=['pyserial', 'click', 'filelock'],
     extras_require={'dev': ['line_profiler', 'pylint']},
