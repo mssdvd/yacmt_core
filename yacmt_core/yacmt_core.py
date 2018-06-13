@@ -15,7 +15,6 @@ def print_obd_values(values: Dict) -> None:
     if "eng_load" in values:
         print("Engine load:")
         print(str(values["eng_load"]) + " %")
-
     if "eng_cool_temp" in values:
         print("Engine coolant temperature:")
         print(str(values["eng_cool_temp"]) + " C")
