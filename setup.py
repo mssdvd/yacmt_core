@@ -5,7 +5,6 @@ setup(
     version='0.3',
     author='Davide Masserut',
     author_email='d.masserut@gmail.com',
-    license='MIT',
     packages=['yacmt_core'],
     install_requires=['pyserial', 'click', 'filelock'],
     extras_require={'dev': ['line_profiler', 'pylint']},
@@ -15,4 +14,7 @@ setup(
             'yacmt_core = yacmt_core.yacmt_core:main',
             'yacmt_demo = yacmt_core.yacmt_demo:main'
         ]
-    })
+    },
+    classifiers=[
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
+    ])
