@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='yacmt_core',
-    version='0.3',
+    version='0.4',
     author='Davide Masserut',
     author_email='d.masserut@gmail.com',
     packages=['yacmt_core'],
